@@ -7,7 +7,7 @@ def token():
                '0','1','2','3','4','5','6','7','8','9',
                #caractères spéciaux
                '@','#','&','é','"','(','§','è','!','ç','à',')','°','-','_','$','*','€','^','¨','£','`','ù','%','=',
-               '+',':','/',';','.',',','?','<','>'] #' a été enlevé
+               '+',':','/',';','.',',','?','<','>'] # ' a été enlevé
     token = ''
     for i in range(8):
         token = token + random.choice(choices)
@@ -40,10 +40,10 @@ def user_login(password : str, username : str):
             if liste[0] == username and liste[1] == password:
                 print('Connected')
                 fichier.close()
-                return None
-        print('Either your passeword or your username is wrong')
+                return 'Connected'
+        #print('Either your passeword or your username is wrong')
         fichier.close()
-        return None
+        return 'Either your passeword or your username is wrong'
 
     elif password_exist > 1:
         fichier = open('data.txt','r')
@@ -61,21 +61,25 @@ def user_login(password : str, username : str):
             if element == token_s:
                 same_token += 1
         if same_token == 1:
-            print("connected")
+            #print("connected")
+            fichier.close()
+            return 'Connected'
         else:
-            print("weird you don't exist")
-        fichier.close()
+            #print("weird you don't exist")
+            fichier.close()
+            return "weird you don't exist"
 
     else:
-        answer = input("You don't have an account, do you want to make one ? y or n : ")
-        if answer == 'yes' or answer == 'y':
-            creation_account()
-        elif answer == 'no' or answer == 'n':
-            print('You chose to not create an account')
-            return None
-        else:
-            print('Wrong answer, you chose to not create an account then')
-            return None
+        #answer = input("You don't have an account, do you want to make one ? y or n : ")
+        #if answer == 'yes' or answer == 'y':
+        #    creation_account()
+        #elif answer == 'no' or answer == 'n':
+        #    #print('You chose to not create an account')
+        #    return 'You chose to not create an account'
+        #else:
+        #    #print('Wrong answer, you chose to not create an account then')
+        #    return 'Wrong answer, you chose to not create an account then'
+        return "You don't have an account"
 
 
 def creation_account():
@@ -94,7 +98,8 @@ def creation_account():
     fichier = open('data.txt','a')
     fichier.write("\n"+username+" "+password+" "+user_token)
     fichier.close()
-    print('The account have been successfully created')
+    #print('The account have been successfully created')
+    return 'The account have been successfully created'
 
 def main():
     print("1 : se connecter")
@@ -107,9 +112,8 @@ def main():
     elif choix_user == "2":
         creation_account()
     elif choix_user == 'q':
-        print("The exit was a success")
-        return None
+        #print("The exit was a success")
+        return "The exit was a success"
     else:
-        print('wrong choice')
-
-main()
+        #print('wrong choice')
+        return 'wrong choice'
