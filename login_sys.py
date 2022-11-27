@@ -1,8 +1,5 @@
 import random
 
-password_dic = {'password1':'(pWç4iCQ','password2':'FI4.2§=.','lol':'o$B°r1FA'}
-username_dic = {'user1':'(pWç4iCQ','user2':'FI4.2§=.','traft':'o$B°r1FA'}
-
 def token():
     choices = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
                'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
