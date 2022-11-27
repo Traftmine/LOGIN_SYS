@@ -17,27 +17,58 @@ def token():
     return token
 
 def user_login(password : str, username : str):
+    fichier = open("data.txt", "r")
+
     password_exist, username_exist = 0, 0
-    for clé in password_dic.keys(): #à modifier en utilisant un fichier texte pour stocker, car dans un dico si 2 clés on la même valeur ça bug
-        if clé == password:
-            password_exist += 1
-    for clé in username_dic.keys():
-        if clé == username:
-            username_exist += 1
+    for clé in fichier.readlines(): #on parcours les lignes du fichier
+        for words in clé.split(): #on parcours les mots d'une ligne
+            if words == password:
+                password_exist += 1
+
+    fichier.close()
+    fichier = open('data.txt','r')
+
+    for clé in fichier.readlines():
+        for words in clé.split():
+            if words == username:
+                username_exist += 1
+
+    fichier.close()
+    fichier = open('data.txt','r')
 
     if password_exist == 1 and username_exist == 1:
-        if password_dic[password] == username_dic[username]:
-            print('Connected')
-            return None
-        else:
-            print('Either your passeword or your username is wrong')
-            return None
+        fichier = open('data.txt','r')
+        for lines in fichier.readlines():
+            liste = lines.split()
+            if liste[0] == username and liste[1] == password:
+                print('Connected')
+                fichier.close()
+                return None
+        print('Either your passeword or your username is wrong')
+        fichier.close()
+        return None
 
     elif password_exist > 1:
-        for clé in password_dic.keys():
-            if password_dic[clé] == username_dic[username]:
-                print('Connected /someone has the same/ password')
-                return None
+        fichier = open('data.txt','r')
+        similar_pass, token_list, same_token, token_s = [], [], 0, ''
+        for lines in fichier.readlines():
+            words = lines.split()
+            token_list.append(words[2])
+
+            if words[1] == password:
+                similar_pass.append(words[2])
+            if words[0] == username:
+                token_s = words[2]
+
+        for element in similar_pass:
+            if element == token_s:
+                same_token += 1
+        if same_token == 1:
+            print("connected")
+        else:
+            print("weird you don't exist")
+        fichier.close()
+
     else:
         answer = input("You don't have an account, do you want to make one ? y or n : ")
         if answer == 'yes' or answer == 'y':
@@ -53,13 +84,19 @@ def user_login(password : str, username : str):
 def creation_account():
     username, password = input('Your username : '), input('Your password : ')
     password_exist, username_exist = 0, 0
-    for clé in username_dic.keys():
-        if clé == username:
+    fichier = open('data.txt','r')
+
+    for lines in fichier.readlines():
+        words = lines.split()
+        if words[0] == username:
             username = input("It already exist, you must change your username, your new one is : ")
 
+    fichier.close()
     user_token = token()
 
-    username_dic[username], password_dic[password] = user_token, user_token
+    fichier = open('data.txt','a')
+    fichier.write("\n"+username+" "+password+" "+user_token)
+    fichier.close()
     print('The account have been successfully created')
 
 def main():
