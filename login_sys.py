@@ -107,7 +107,7 @@ def main():
     elif choix_user == "2":
         creation_account()
     elif choix_user == 'q':
-        print("I quit")
+        print("The exit was a success")
         return None
     else:
         print('wrong choice')
